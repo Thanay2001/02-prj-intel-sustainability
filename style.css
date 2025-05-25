@@ -111,12 +111,39 @@ header p {
 
 /* Timeline Section */
 section {
+  /* By default, stack cards vertically for small screens */
   display: flex;
   flex-direction: column;
   gap: 30px;
   padding: 40px 20px;
   max-width: 900px;
   margin: auto;
+  /* Allow horizontal scrolling on large screens (overridden below) */
+  overflow-x: auto;
+}
+
+/* On screens 900px and wider, show timeline horizontally */
+@media (min-width: 900px) {
+  section {
+    flex-direction: row; /* Arrange cards in a row */
+    gap: 30px;
+    max-width: 100vw; /* Use full width of the screen */
+    overflow-x: auto; /* Enable horizontal scroll if needed */
+    padding: 40px 20px;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+  section > a.timeline-link {
+    min-width: 300px; /* Each card has a minimum width */
+    flex: 0 0 300px; /* Prevent shrinking below 300px */
+  }
+}
+
+/* Add a little margin to the last card for better scroll experience */
+@media (min-width: 900px) {
+  section > a.timeline-link:last-child {
+    margin-right: 40px;
+  }
 }
 
 /* Timeline Cards */
@@ -182,3 +209,10 @@ body > p:last-child {
   color: #777;
   font-size: 0.95em;
 }
+
+/*
+  Comments:
+  - The timeline will scroll left/right on large screens if there are many cards.
+  - On small screens, cards stack vertically for easy reading.
+  - We use flexbox for layout because it's simple and beginner-friendly.
+*/
